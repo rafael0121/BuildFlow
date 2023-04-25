@@ -46,8 +46,50 @@ class _HomepageState extends State<HomePage> {
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Home'),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(7.0),
+                    child: Column(
+                      children: <Widget>[
+                        Image.asset(
+                          '/home/rafael/StudioProjects/BuildFlow/lib/assets/image2.jpeg',
+                          height: 300,
+                          width: 300,
+                        ),
+                        SizedBox(height: 10),
+                        Text('Betim - Guarujá'),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        Image.asset(
+                          '/home/rafael/StudioProjects/BuildFlow/lib/assets/image1.webp',
+                          height: 300,
+                          width: 300,
+                        ),
+                        SizedBox(height: 10),
+                        Text('Belo Horizonte - Catedral'),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
