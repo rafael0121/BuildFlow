@@ -1,93 +1,115 @@
-import 'package:buildflow/login_page.dart';
+import 'login_page.dart';
 import 'package:flutter/material.dart';
 import 'settings_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  _HomepageState createState() => _HomepageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomepageState extends State<HomePage> {
-  int _selectedIndex = 0;
-  final List _pages = [Home(), ConfiguracoesPage()];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+class _HomePageState extends State<HomePage> {
+  List<Obra> obras = [
+    Obra('Obra 1', 'image1.jpg'),
+    Obra('Obra 2', 'image2.jpg'),
+    Obra('Obra 3', 'image3.jpg'),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BuildFlow'),
-      ),
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
+        leading: IconButton(
+          icon: Icon(Icons.logout),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Center(child: Text('Minhas Obras')),
+        actions: [
+          IconButton(
             icon: Icon(Icons.settings),
-            label: 'Configurações',
+            onPressed: () {
+              Navigator.pushNamed(context, '/home/settings');
+            },
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.orange,
-        onTap: _onItemTapped,
+      ),
+      body: ListView.builder(
+        itemCount: obras.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Image.asset(obras[index].imagePath),
+            title: Text(obras[index].nome),
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                setState(() {
+                  obras.removeAt(index);
+                });
+              },
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Adicionar Obra'),
+                content: TextField(
+                  decoration: InputDecoration(labelText: 'Nome da Obra'),
+                  onChanged: (value) {
+                    // Lógica para armazenar o valor do TextField
+                  },
+                ),
+                actions: [
+                  TextButton(
+                    child: Text('Cancelar'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  TextButton(
+                    child: Text('Adicionar'),
+                    onPressed: () {
+                      setState(() {
+                        obras.add(Obra('Nova Obra',
+                            'default_image.jpg')); // Substitua pelo valor do TextField e pela imagem desejada
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
       ),
     );
   }
 }
 
-class Home extends StatelessWidget {
+class Obra {
+  final String nome;
+  final String imagePath;
+
+  Obra(this.nome, this.imagePath);
+}
+
+class ConfigPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(7.0),
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset(
-                          '/home/rafael/StudioProjects/BuildFlow/lib/assets/image2.jpeg',
-                          height: 300,
-                          width: 300,
-                        ),
-                        SizedBox(height: 10),
-                        Text('Betim - Guarujá'),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset(
-                          '/home/rafael/StudioProjects/BuildFlow/lib/assets/image1.webp',
-                          height: 300,
-                          width: 300,
-                        ),
-                        SizedBox(height: 10),
-                        Text('Belo Horizonte - Catedral'),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+      appBar: AppBar(
+        title: Text('Configurações'),
+      ),
+      body: Center(
+        child: Text(
+          'Página de Configurações',
+          style: TextStyle(fontSize: 24),
         ),
       ),
     );

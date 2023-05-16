@@ -1,12 +1,14 @@
+import 'package:buildflow/sec-and-acs.dart';
 import 'package:flutter/material.dart';
 import 'home_page.dart';
+import 'sec-and-acs.dart';
 
-class ConfiguracoesPage extends StatefulWidget {
+class Settings_page extends StatefulWidget {
   @override
-  _ConfiguracoesPageState createState() => _ConfiguracoesPageState();
+  _Settings_pageState createState() => _Settings_pageState();
 }
 
-class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
+class _Settings_pageState extends State<Settings_page> {
   bool _isTemaEscuro = false;
   bool _isNotificacoesHabilitadas = true;
 
@@ -43,7 +45,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
             title: Text("Gerenciar conta"),
             subtitle: Text("Editar informações de perfil e senha"),
             onTap: () {
-              // Implementar navegação para a página de gerenciamento de conta
+              Navigator.pushNamed(context, '/home/settings/account');
             },
           ),
           Divider(),
@@ -52,7 +54,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
             title: Text("Segurança e acesso"),
             subtitle: Text("Configurar autenticação, permissões e privacidade"),
             onTap: () {
-              // Implementar navegação para a página de segurança e acesso
+              Navigator.pushNamed(context, "/home/settings/security");
             },
           ),
           Divider(),
@@ -62,24 +64,6 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
             value: _isNotificacoesHabilitadas,
             onChanged: (bool value) {
               _alterarNotificacoes(value);
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.privacy_tip),
-            title: Text("Privacidade"),
-            subtitle: Text("Gerenciar configurações de privacidade"),
-            onTap: () {
-              // Implementar navegação para a página de privacidade
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.accessibility),
-            title: Text("Acessibilidade"),
-            subtitle: Text("Configurar opções de acessibilidade"),
-            onTap: () {
-              // Implementar navegação para a página de acessibilidade
             },
           ),
           Divider(),
