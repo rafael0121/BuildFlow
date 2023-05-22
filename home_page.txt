@@ -1,0 +1,106 @@
+import 'package:flutter/material.dart';
+import 'addbuild_page.dart';
+import 'construction_page.dart';
+import 'editbuild_page.dart';
+
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Obra> obras = [
+    Obra('Obra 1', 'image/image1.webp'),
+    Obra('Obra 2', 'image/image2.jpeg'),
+    Obra('Obra 3', 'image/image3.jpeg'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.logout),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Center(child: Text('Minhas Obras')),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(context, '/home/settings');
+            },
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: obras.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Container(
+              width: 80, // Defina o tamanho desejado
+              height: 80,
+              child: Image.asset(obras[index].imagePath),
+            ),
+            title: InkWell(
+              onTap: () {
+                // Ação quando o título da obra for clicado
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Construction_page(),
+                  ),
+                );
+              },
+              child: Text(obras[index].nome),
+            ),
+            trailing: Wrap(
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditObraPage(obra: obras[index]),
+                      ),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    setState(() {
+                      obras.removeAt(index);
+                    });
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddObraPage(),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class Obra {
+  final String nome;
+  final String imagePath;
+
+  Obra(this.nome, this.imagePath);
+}
+

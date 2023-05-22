@@ -49,97 +49,93 @@ class _ManageAccState extends State<ManageAcc> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Perfil do Usuário',
-      theme: ThemeData(primarySwatch: Colors.deepOrange),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Gerenciar Perfil'),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/profile_picture.png'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Gerenciar Conta'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage('assets/profile_picture.png'),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                // Implementação da escolha de imagem
+              },
+              child: Text('Alterar Foto de Perfil'),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Nome:',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 5),
+                  TextField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      hintText: 'Digite seu nome',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Senha:',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 5),
+                  TextField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'Digite sua senha',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Data de Nascimento:',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 5),
+                  TextField(
+                    controller: _dobController,
+                    decoration: InputDecoration(
+                      hintText: 'Digite sua data de nascimento',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'Biografia:',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 5),
+                  TextField(
+                    controller: _biographyController,
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                      hintText: 'Digite sua biografia',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _saveChanges,
+                    child: Text('Salvar Alterações'),
+                  ),
+                ],
               ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  // Implementação da escolha de imagem
-                },
-                child: Text('Alterar Foto de Perfil'),
-              ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Nome:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 5),
-                    TextField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        hintText: 'Digite seu nome',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Senha:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 5),
-                    TextField(
-                      controller: _passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: 'Digite sua senha',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Data de Nascimento:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 5),
-                    TextField(
-                      controller: _dobController,
-                      decoration: InputDecoration(
-                        hintText: 'Digite sua data de nascimento',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Biografia:',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 5),
-                    TextField(
-                      controller: _biographyController,
-                      maxLines: 3,
-                      decoration: InputDecoration(
-                        hintText: 'Digite sua biografia',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _saveChanges,
-                      child: Text('Salvar Alterações'),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

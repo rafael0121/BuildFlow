@@ -1,6 +1,6 @@
-import 'login_page.dart';
 import 'package:flutter/material.dart';
-import 'settings_page.dart';
+import 'addbuild_page.dart';
+import 'construction_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -9,9 +9,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Obra> obras = [
-    Obra('Obra 1', 'image1.jpg'),
-    Obra('Obra 2', 'image2.jpg'),
-    Obra('Obra 3', 'image3.jpg'),
+    Obra('Obra 1', 'image/image1.webp'),
+    Obra('Obra 2', 'image/image2.jpeg'),
+    Obra('Obra 3', 'image/image3.jpeg'),
   ];
 
   @override
@@ -38,15 +38,32 @@ class _HomePageState extends State<HomePage> {
         itemCount: obras.length,
         itemBuilder: (context, index) {
           return ListTile(
-            leading: Image.asset(obras[index].imagePath),
-            title: Text(obras[index].nome),
-            trailing: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                setState(() {
-                  obras.removeAt(index);
-                });
+            leading: SizedBox(
+              width: 80, // Defina a largura desejada
+              height: 80, // Defina a altura desejada
+              child: Image.asset(
+                obras[index].imagePath,
+                fit: BoxFit.cover, // Ajusta a imagem para preencher o espaço definido
+              ),
+            ),
+            title: InkWell(
+              onTap: () {
+                // Ação quando o título da obra for clicado
+                Navigator.pushNamed(context, '/home/construction');
               },
+              child: Text(obras[index].nome),
+            ),
+            trailing: Wrap(
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    setState(() {
+                      obras.removeAt(index);
+                    });
+                  },
+                ),
+              ],
             ),
           );
         },
@@ -54,38 +71,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Adicionar Obra'),
-                content: TextField(
-                  decoration: InputDecoration(labelText: 'Nome da Obra'),
-                  onChanged: (value) {
-                    // Lógica para armazenar o valor do TextField
-                  },
-                ),
-                actions: [
-                  TextButton(
-                    child: Text('Cancelar'),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  TextButton(
-                    child: Text('Adicionar'),
-                    onPressed: () {
-                      setState(() {
-                        obras.add(Obra('Nova Obra',
-                            'default_image.jpg')); // Substitua pelo valor do TextField e pela imagem desejada
-                      });
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              );
-            },
-          );
+          Navigator.pushNamed(context, '/home/addobra');
         },
       ),
     );
@@ -97,21 +83,4 @@ class Obra {
   final String imagePath;
 
   Obra(this.nome, this.imagePath);
-}
-
-class ConfigPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Configurações'),
-      ),
-      body: Center(
-        child: Text(
-          'Página de Configurações',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
 }

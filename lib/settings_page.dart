@@ -1,7 +1,7 @@
-import 'package:buildflow/sec-and-acs.dart';
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'sec-and-acs.dart';
+import 'info.dart';
 
 class Settings_page extends StatefulWidget {
   @override
@@ -26,57 +26,59 @@ class _Settings_pageState extends State<Settings_page> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      body: ListView(
-        children: [
-          SizedBox(height: 16.0),
-          SwitchListTile(
-            title: Text("Tema escuro"),
-            subtitle: Text("Ativar/desativar o tema escuro"),
-            value: _isTemaEscuro,
-            onChanged: (bool value) {
-              _alterarTema(value);
-            },
+    return Scaffold(
+          appBar: AppBar(
+            title: Text('Configurações'),
           ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text("Gerenciar conta"),
-            subtitle: Text("Editar informações de perfil e senha"),
-            onTap: () {
-              Navigator.pushNamed(context, '/home/settings/account');
-            },
+          body: ListView(
+            children: [
+              SizedBox(height: 16.0),
+              SwitchListTile(
+                title: Text("Tema escuro"),
+                subtitle: Text("Ativar/desativar o tema escuro"),
+                value: _isTemaEscuro,
+                onChanged: (bool value) {
+                  _alterarTema(value);
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text("Gerenciar conta"),
+                subtitle: Text("Editar informações de perfil e senha"),
+                onTap: () {
+                  Navigator.pushNamed(context, '/home/settings/account');
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.lock),
+                title: Text("Segurança e acesso"),
+                subtitle: Text("Configurar autenticação, permissões e privacidade"),
+                onTap: () {
+                  Navigator.pushNamed(context, "/home/settings/security");
+                },
+              ),
+              Divider(),
+              SwitchListTile(
+                title: Text("Notificações"),
+                subtitle: Text("Ativar/desativar notificações do aplicativo"),
+                value: _isNotificacoesHabilitadas,
+                onChanged: (bool value) {
+                  _alterarNotificacoes(value);
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.info),
+                title: Text("Informações sobre o aplicativo"),
+                subtitle: Text("Versão, desenvolvedor, termos de uso, etc."),
+                onTap: () {
+                  Navigator.pushNamed(context, '/home/settings/info');
+                },
+              ),
+            ],
           ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.lock),
-            title: Text("Segurança e acesso"),
-            subtitle: Text("Configurar autenticação, permissões e privacidade"),
-            onTap: () {
-              Navigator.pushNamed(context, "/home/settings/security");
-            },
-          ),
-          Divider(),
-          SwitchListTile(
-            title: Text("Notificações"),
-            subtitle: Text("Ativar/desativar notificações do aplicativo"),
-            value: _isNotificacoesHabilitadas,
-            onChanged: (bool value) {
-              _alterarNotificacoes(value);
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Icon(Icons.info),
-            title: Text("Informações sobre o aplicativo"),
-            subtitle: Text("Versão, desenvolvedor, termos de uso, etc."),
-            onTap: () {
-              // Implementar navegação para a página de informações
-            },
-          ),
-        ],
-      ),
-    ));
+        );
   }
 }

@@ -15,7 +15,7 @@ class LoginPage extends StatelessWidget {
             SizedBox(
               width: 128,
               height: 128,
-              child: Image.asset("images/Construction.png"),
+              child: Image.asset('images/Construction-PNG.png'),
             ),
             SizedBox(
               height: 20,
@@ -59,12 +59,13 @@ class LoginPage extends StatelessWidget {
                   textAlign: TextAlign.right,
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushNamed(context, '/passwordreset');
+                  /*Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ResetPasswordPage(),
                     ),
-                  );
+                  );*/
                 },
               ),
             ),

@@ -5,7 +5,7 @@ class Sec_page extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Página Inicial'),
+        title: Text('Segurança e acesso'),
       ),
       body: Center(
         child: Column(

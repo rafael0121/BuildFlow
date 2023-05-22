@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "957942677444",
+    "project_id": "buildflow-fa804",
+    "storage_bucket": "buildflow-fa804.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957942677444:android:336f40f71f564a7ca9ee91",
+        "android_client_info": {
+          "package_name": "com.example.buildflow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957942677444-2oii0eqahe0om4r9qevoivsdj2spgrd1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvPfGJV_ccE1rsb71vGBNiT1RRIboldfI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "957942677444-2oii0eqahe0om4r9qevoivsdj2spgrd1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
