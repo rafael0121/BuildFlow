@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'addemp_page.dart';
 
@@ -7,17 +9,30 @@ class AddObraPage extends StatefulWidget {
 }
 
 class _AddObraPageState extends State<AddObraPage> {
-  String nome = '';
-  String dataInicio = '';
-  String previsaoTermino = '';
-  String objetivos = '';
-  String epocaAno = '';
+  final GlobalKey<FormState> _formKey_name = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey_start = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey_end = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey_description = GlobalKey<FormState>();
+
+  String? name_insert;
+  String? start_insert;
+  String? end_insert;
+  String? description_insert;
+
+  TextEditingController dateinput_start = TextEditingController();
+  TextEditingController dateinput_end = TextEditingController();
+  @override
+  void initState() {
+    dateinput_start.text = "";
+    dateinput_end.text = "";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Adicionar Obra'),
+        title: Text('Adicionar Projeto'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
@@ -29,85 +44,136 @@ class _AddObraPageState extends State<AddObraPage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Digite o nome da obra',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  nome = value;
-                });
-              },
-            ),
+            Form(
+                key: _formKey_name,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Digite o nome da obra',
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (String? value) {
+                          name_insert = value;
+                        },
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor insira o nome da obra';
+                          }
+                          return null;
+                        },
+                      )
+                    ])),
             SizedBox(height: 16),
             Text(
               'Data de Início',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Digite a data de início',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  dataInicio = value;
-                });
-              },
-            ),
+            Form(
+                key: _formKey_start,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        controller: dateinput_start,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.calendar_today),
+                          hintText: 'Insira a data de início',
+                          border: OutlineInputBorder(),
+                        ),
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2101));
+
+                          if (pickedDate != null) {
+                            String formattedDate =
+                                DateFormat('dd/MM/yyyy').format(pickedDate);
+                            setState(() {
+                              dateinput_start.text = formattedDate;
+                            });
+                          }
+                        },
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor insira a data de início';
+                          }
+                          return null;
+                        },
+                      ),
+                    ])),
             SizedBox(height: 16),
             Text(
               'Previsão de Término',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Digite a previsão de término',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  previsaoTermino = value;
-                });
-              },
-            ),
+            Form(
+                key: _formKey_end,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        controller: dateinput_end,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.calendar_today),
+                          hintText: 'Insira a previsão de término',
+                          border: OutlineInputBorder(),
+                        ),
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime.now(),
+                              lastDate: DateTime(2101));
+
+                          if (pickedDate != null) {
+                            String formattedDate =
+                                DateFormat('dd/MM/yyyy').format(pickedDate);
+                            setState(() {
+                              dateinput_end.text = formattedDate;
+                            });
+                          }
+                        },
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor insira a previsão de término';
+                          }
+                          return null;
+                        },
+                      ),
+                    ])),
             SizedBox(height: 16),
             Text(
-              'Objetivos',
+              'Descrição',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Digite os objetivos da obra',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  objetivos = value;
-                });
-              },
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Época do Ano',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Digite a época do ano da obra',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  epocaAno = value;
-                });
-              },
-            ),
+            Form(
+                key: _formKey_description,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: 'Digite a descrição da obra',
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (String? value) {
+                          description_insert = value;
+                        },
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor insira a descrição da obra';
+                          }
+                          return null;
+                        },
+                      )
+                    ])),
             SizedBox(height: 32),
           ],
         ),
@@ -127,4 +193,3 @@ class _AddObraPageState extends State<AddObraPage> {
     );
   }
 }
-

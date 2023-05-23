@@ -1,6 +1,22 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:buildflow/database.dart';
 import 'package:flutter/material.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  String? name_sign, login_sign, password_sign;
+
+  final GlobalKey<FormState> _formKey_name = GlobalKey<FormState>();
+
+  final GlobalKey<FormState> _formKey_login = GlobalKey<FormState>();
+
+  final GlobalKey<FormState> _formKey_password = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,9 +29,10 @@ class SignupPage extends StatelessWidget {
               width: 200,
               height: 200,
               alignment: Alignment(0.0, 1.15),
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
+                // ignore: unnecessary_new, prefer_const_constructors
                 image: new DecorationImage(
-                  image: AssetImage("images/profile-picture.png"),
+                  image: AssetImage("images/fenda.png"),
                   fit: BoxFit.fitHeight,
                 ),
               ),
@@ -24,7 +41,7 @@ class SignupPage extends StatelessWidget {
                 width: 56,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     stops: [0.3, 1.0],
@@ -38,7 +55,7 @@ class SignupPage extends StatelessWidget {
                     color: const Color(0xFFFFFFFF),
                   ),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(56),
+                    const Radius.circular(56),
                   ),
                 ),
                 child: SizedBox.expand(
@@ -55,56 +72,91 @@ class SignupPage extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            TextFormField(
-              // autofocus: true,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: "Nome",
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 20,
-                ),
-              ),
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
+            Form(
+                key: _formKey_name,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          labelText: "Nome",
+                          labelStyle: TextStyle(
+                            color: Colors.black38,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                          ),
+                        ),
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor insira seu nome';
+                          }
+                          return null;
+                        },
+                        onChanged: (String? value) {
+                          name_sign = value;
+                        },
+                      )
+                    ])),
             SizedBox(
               height: 10,
             ),
-            TextFormField(
-              // autofocus: true,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                labelText: "E-mail",
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 20,
-                ),
-              ),
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
+            Form(
+                key: _formKey_login,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          labelText: "Login",
+                          labelStyle: TextStyle(
+                            color: Colors.black38,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                          ),
+                        ),
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor insira seu login';
+                          }
+                          return null;
+                        },
+                        onChanged: (String? value) {
+                          login_sign = value;
+                        },
+                      )
+                    ])),
             SizedBox(
               height: 10,
             ),
-            TextFormField(
-              // autofocus: true,
-              keyboardType: TextInputType.text,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: "Senha",
-                labelStyle: TextStyle(
-                  color: Colors.black38,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 20,
-                ),
-              ),
-              style: TextStyle(fontSize: 20),
-            ),
+            Form(
+                key: _formKey_password,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: "Senha",
+                          labelStyle: TextStyle(
+                            color: Colors.black38,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                          ),
+                        ),
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor insira sua senha';
+                          }
+                          return null;
+                        },
+                        onChanged: (String? value) {
+                          password_sign = value;
+                        },
+                      )
+                    ])),
             SizedBox(
               height: 10,
             ),
@@ -136,7 +188,35 @@ class SignupPage extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (_formKey_name.currentState!.validate()) {
+                      if (_formKey_login.currentState!.validate()) {
+                        if (_formKey_password.currentState!.validate()) {
+                          if (await add_user(
+                              name_sign, login_sign, password_sign)) {
+                            final snackBar = SnackBar(
+                                content: Text(
+                                  "Usuário adicionado com sucesso",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                backgroundColor: Colors.green);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                            Navigator.pop(context);
+                          }else{
+final snackBar = SnackBar(
+                                content: Text(
+                                  "Usuário já existe",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                backgroundColor: Colors.red);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
+                        }
+                      }
+                    }
+                  },
                 ),
               ),
             ),

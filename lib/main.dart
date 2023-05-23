@@ -1,16 +1,30 @@
+import 'package:buildflow/signup.page.dart';
+
 import 'addbuild_page.dart';
 import 'info.dart';
 import 'manage_acc.dart';
 import 'settings_page.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'login_page.dart';
 import 'sec-and-acs.dart';
 import 'home_page.dart';
 import 'construction_page.dart';
 import 'reset-password.page.dart';
+import 'database.dart';
 
-void main() {
+Save_cred? save_cred;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
+}
+
+class Save_cred {
+  String? login;
 }
 
 class MyApp extends StatelessWidget {
@@ -23,6 +37,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
+        '/signup': (context) => SignupPage(),
         '/passwordreset': (context) => ResetPasswordPage(),
         '/home': (context) => HomePage(),
         '/home/construction': (context) => Construction_page(),

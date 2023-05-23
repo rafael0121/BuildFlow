@@ -29,6 +29,13 @@
             {
               "client_id": "957942677444-2oii0eqahe0om4r9qevoivsdj2spgrd1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "957942677444-u10nnt9ksevcrvf7sj2dccbrb6ehs2p6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.buildflow"
+              }
             }
           ]
         }
