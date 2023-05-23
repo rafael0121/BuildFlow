@@ -1,3 +1,6 @@
+import 'dart:core';
+
+import 'package:buildflow/database.dart';
 import 'package:flutter/material.dart';
 import 'addbuild_page.dart';
 import 'construction_page.dart';
@@ -8,12 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Obra> obras = [
-    Obra('Obra 1', 'image/image1.webp'),
-    Obra('Obra 2', 'image/image2.jpeg'),
-    Obra('Obra 3', 'image/image3.jpeg'),
-  ];
-
+  var obras = get_build();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,40 +32,81 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: obras.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: SizedBox(
-              width: 80, // Defina a largura desejada
-              height: 80, // Defina a altura desejada
-              child: Image.asset(
-                obras[index].imagePath,
-                fit: BoxFit.cover, // Ajusta a imagem para preencher o espaço definido
-              ),
-            ),
-            title: InkWell(
-              onTap: () {
-                // Ação quando o título da obra for clicado
-                Navigator.pushNamed(context, '/home/construction');
+      body: FutureBuilder<List<Map<dynamic, dynamic>?>?>(
+        future: obras,
+        builder: (context, snapshot) {
+          List<Widget> children;
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: SizedBox(
+                    width: 80, // Defina a largura desejada
+                    height: 80, // Defina a altura desejada
+                    child: Image.network(snapshot.data?[index]?["Imagem"]
+                     ,
+                      fit: BoxFit
+                          .cover, // Ajusta a imagem para preencher o espaço definido
+                    ),
+                  ),
+                  title: InkWell(
+                    onTap: () {
+                      // Ação quando o título da obra for clicado
+                      Navigator.pushNamed(context, '/home/construction');
+                    },
+                    child: Text(snapshot.data?[index]?["Nome"]),
+                  ),
+                  trailing: Wrap(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          setState(() {
+                            //obras.removeAt(index);
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                );
               },
-              child: Text(obras[index].nome),
-            ),
-            trailing: Wrap(
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () {
-                    setState(() {
-                      obras.removeAt(index);
-                    });
-                  },
-                ),
-              ],
+            );
+          } else if (snapshot.hasError) {
+            children = <Widget>[
+              const Icon(
+                Icons.error_outline,
+                color: Colors.red,
+                size: 60,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text('Error: ${snapshot.error}'),
+              ),
+            ];
+          } else {
+            children = const <Widget>[
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: CircularProgressIndicator(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text('Awaiting result...'),
+              ),
+            ];
+          }
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: children,
             ),
           );
         },
       ),
+
+      /**/
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -76,11 +115,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
-
-class Obra {
-  final String nome;
-  final String imagePath;
-
-  Obra(this.nome, this.imagePath);
 }

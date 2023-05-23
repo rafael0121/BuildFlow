@@ -10,7 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //-------------------------------------------------------
 
 Future<bool> add_user(String? name, String? login, String? password) async {
-  await FirebaseFirestore.instance
+  var response = await FirebaseFirestore.instance
       .collection("inspetor")
       .where("Login", isEqualTo: login)
       .get()
@@ -23,7 +23,7 @@ Future<bool> add_user(String? name, String? login, String? password) async {
     }
     return true;
   });
-  return true;
+  return response;
 }
 
 Future<bool> check_login(String? login, String? password) async {
@@ -50,7 +50,7 @@ Future<bool> check_login(String? login, String? password) async {
 
 Future<bool> add_build(String? name, String? start_date, String? end_date,
     String? description) async {
-  await FirebaseFirestore.instance
+  var response = await FirebaseFirestore.instance
       .collection("projetos")
       .where("Nome", isEqualTo: name)
       .get()
@@ -71,19 +71,22 @@ Future<bool> add_build(String? name, String? start_date, String? end_date,
     return true;
   });
 
-  return false;
+  return response;
 }
 
-Future<Map?> get_build() async {
-  Map projetos;
-
-  int i = 0;
-  await FirebaseFirestore.instance
+Future<List<Map?>?> get_build() async {
+  var response = await FirebaseFirestore.instance
       .collection("projetos")
       .where("Inspetor", isEqualTo: save_cred?.login)
       .get()
       .then((QuerySnapshot querySnapshot) {
-    return projetos = querySnapshot.docs.asMap();
+    List<Map<String, dynamic>>? obras = [];
+    for (var docSnapshot in querySnapshot.docs) {
+      var dados = docSnapshot.data() as Map<String, dynamic>;
+      obras!.add(dados);
+    }
+    return obras;
   });
-  return null;
+
+  return response;
 }
