@@ -49,7 +49,7 @@ Future<bool> check_login(String? login, String? password) async {
 //-------------------------------------------------------
 
 Future<bool> add_build(String? name, String? start_date, String? end_date,
-    String? description) async {
+    String? description, String? login) async {
   var response = await FirebaseFirestore.instance
       .collection("projetos")
       .where("Nome", isEqualTo: name)
@@ -60,12 +60,13 @@ Future<bool> add_build(String? name, String? start_date, String? end_date,
     } else {
       await FirebaseFirestore.instance
           .collection("projetos")
-          .add(<String, dynamic>{
+          .add(<String, String?>{
         'Nome': name,
         'Data_inicio': start_date,
         'Data_termino': end_date,
         'Descricao': description,
-        'Inspetor': save_cred?.login,
+        'Inspetor': login,
+        'Imagem' : "",  
       });
     }
     return true;
@@ -74,10 +75,10 @@ Future<bool> add_build(String? name, String? start_date, String? end_date,
   return response;
 }
 
-Future<List<Map?>?> get_build() async {
+Future<List<Map?>?> get_build(String? login) async {
   var response = await FirebaseFirestore.instance
       .collection("projetos")
-      .where("Inspetor", isEqualTo: save_cred?.login)
+      .where("Inspetor", isEqualTo: login)
       .get()
       .then((QuerySnapshot querySnapshot) {
     List<Map<String, dynamic>>? obras = [];

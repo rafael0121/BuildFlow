@@ -203,8 +203,8 @@ class _SignupPageState extends State<SignupPage> {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
                             Navigator.pop(context);
-                          }else{
-final snackBar = SnackBar(
+                          } else {
+                            final snackBar = SnackBar(
                                 content: Text(
                                   "Usuário já existe",
                                   style: TextStyle(fontSize: 20),

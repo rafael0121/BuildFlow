@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:buildflow/database.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'addemp_page.dart';
@@ -30,6 +31,7 @@ class _AddObraPageState extends State<AddObraPage> {
 
   @override
   Widget build(BuildContext context) {
+  final String login = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         title: Text('Adicionar Projeto'),
@@ -94,7 +96,7 @@ class _AddObraPageState extends State<AddObraPage> {
                             String formattedDate =
                                 DateFormat('dd/MM/yyyy').format(pickedDate);
                             setState(() {
-                              dateinput_start.text = formattedDate;
+                              dateinput_start.text = start_insert = formattedDate;
                             });
                           }
                         },
@@ -135,7 +137,7 @@ class _AddObraPageState extends State<AddObraPage> {
                             String formattedDate =
                                 DateFormat('dd/MM/yyyy').format(pickedDate);
                             setState(() {
-                              dateinput_end.text = formattedDate;
+                              dateinput_end.text= end_insert = formattedDate;
                             });
                           }
                         },
@@ -179,13 +181,36 @@ class _AddObraPageState extends State<AddObraPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => AddFuncionarioPage(),
-            ),
-          );
+        onPressed: () async {
+          if (_formKey_name.currentState!.validate()) {
+            if (_formKey_start.currentState!.validate()) {
+              if (_formKey_end.currentState!.validate()) {
+                if (_formKey_description.currentState!.validate()) {
+                  if (await add_build(name_insert, start_insert, end_insert,
+                      description_insert, login)) {
+                    final snackBar = SnackBar(
+                        content: Text(
+                          "Projeto adicionado com sucesso",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        backgroundColor: Colors.green);
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                    Navigator.pop(context);
+                  } else {
+                    final snackBar = SnackBar(
+                        content: Text(
+                          "Projeto já existe",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        backgroundColor: Colors.red);
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                }
+              }
+            }
+          }
+
         },
         child: Icon(Icons.arrow_forward),
       ),

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:buildflow/main.dart';
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'reset-password.page.dart';
@@ -149,10 +150,12 @@ class _LoginPageState extends State<LoginPage> {
                     onPressed: () async {
                       if (_formKey_Login.currentState!.validate()) {
                         if (_formKey_Password.currentState!.validate()) {
-                          if (await check_login(login_insert, password_insert)) {
+                          if (await check_login(
+                              login_insert, password_insert)) {
                             _formKey_Login.currentState!.reset();
                             _formKey_Password.currentState!.reset();
-                            Navigator.pushNamed(context, "/home");
+                            save_cred?.login = login_insert;
+                            Navigator.pushNamed(context, "/home", arguments: login_insert);
                           } else {
                             final snackBar = SnackBar(
                                 content: Text(

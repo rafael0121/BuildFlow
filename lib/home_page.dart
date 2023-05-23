@@ -11,9 +11,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var obras = get_build();
   @override
   Widget build(BuildContext context) {
+    final String login = ModalRoute.of(context)!.settings.arguments as String;
+  var obras = get_build(login);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -44,8 +45,8 @@ class _HomePageState extends State<HomePage> {
                   leading: SizedBox(
                     width: 80, // Defina a largura desejada
                     height: 80, // Defina a altura desejada
-                    child: Image.network(snapshot.data?[index]?["Imagem"]
-                     ,
+                    child: Image.network(
+                      snapshot.data?[index]?["Imagem"],
                       fit: BoxFit
                           .cover, // Ajusta a imagem para preencher o espaço definido
                     ),
@@ -53,7 +54,8 @@ class _HomePageState extends State<HomePage> {
                   title: InkWell(
                     onTap: () {
                       // Ação quando o título da obra for clicado
-                      Navigator.pushNamed(context, '/home/construction');
+                      Navigator.pushNamed(context, '/home/construction',
+                          arguments: snapshot.data?[index]);
                     },
                     child: Text(snapshot.data?[index]?["Nome"]),
                   ),
@@ -110,7 +112,8 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, '/home/addobra');
+          Navigator.pushNamed(context, '/home/addobra', arguments: login);
+          setState(() {});
         },
       ),
     );

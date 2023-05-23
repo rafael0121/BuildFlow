@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Construction_page extends StatefulWidget {
@@ -15,6 +18,8 @@ class _Construction_pageState extends State<Construction_page> {
 
   @override
   Widget build(BuildContext context) {
+    final Map<dynamic, dynamic> projeto = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Informação da obra'),
@@ -30,7 +35,7 @@ class _Construction_pageState extends State<Construction_page> {
             ),
             SizedBox(height: 8),
             Text(
-              obraNome,
+              projeto["Nome"],
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 16),
@@ -40,37 +45,28 @@ class _Construction_pageState extends State<Construction_page> {
             ),
             SizedBox(height: 8),
             Text(
-              dataInicio,
+              projeto["Data_inicio"],
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 16),
             Text(
-              'Data de Término:',
+              'Previsão de Término:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
             Text(
-              dataTermino,
+              projeto["Data_termino"],
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 32),
             Text(
-              'Relatório:',
+              'Descrição:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
-            TextFormField(
-              initialValue: relatorio,
-              maxLines: null,
-              decoration: InputDecoration(
-                hintText: 'Digite o relatório da obra...',
-                border: OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                setState(() {
-                  relatorio = value;
-                });
-              },
+            Text(
+              projeto["Descricao"],
+              style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 32),
             Text(
@@ -81,19 +77,13 @@ class _Construction_pageState extends State<Construction_page> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                IconButton(
-                  icon: Icon(Icons.camera_alt),
-                  onPressed: () {
-                    // Lógica para adicionar foto da câmera
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.photo_library),
-                  onPressed: () {
-                    // Lógica para adicionar foto da galeria
-                  },
-                ),
-              ],
+                 SizedBox(
+                    width: 300, // Defina a largura desejada
+                    height: 300, // Defina a altura desejada
+                    child:Image.network(projeto["Imagem"])
+                    ),
+                  ]
+              
             ),
             SizedBox(height: 16),
           ],
