@@ -111,7 +111,7 @@
     },
     {
       "name": "firebase_core",
-      "rootUri": "file:///home/rafael/.pub-cache/hosted/pub.dev/firebase_core-2.13.0",
+      "rootUri": "file:///home/rafael/.pub-cache/hosted/pub.dev/firebase_core-2.13.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -368,7 +368,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-05-22T13:59:25.089434Z",
+  "generated": "2023-06-07T16:24:10.959334Z",
   "generator": "pub",
-  "generatorVersion": "3.0.1"
+  "generatorVersion": "3.0.3"
 }

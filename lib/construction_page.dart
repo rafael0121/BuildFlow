@@ -18,8 +18,10 @@ class _Construction_pageState extends State<Construction_page> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<dynamic, dynamic> projeto =
-        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
+    final Map<String, dynamic> arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final String login = arguments["login"];
+    final Map<dynamic, dynamic> projeto = arguments["projeto"];
 
     return Scaffold(
       appBar: AppBar(
@@ -69,7 +71,18 @@ class _Construction_pageState extends State<Construction_page> {
               projeto["Descricao"],
               style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 32),
+            SizedBox(height: 16),
+            Center(
+              child: TextButton.icon(
+                label: Text("Relatórios"),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/home/construction/report",
+                      arguments: arguments);
+                },
+                icon: Icon(Icons.description),
+              ),
+            ),
+            SizedBox(height: 16),
             Text(
               'Fotos:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

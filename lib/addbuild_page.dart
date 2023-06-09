@@ -2,14 +2,14 @@
 import 'package:buildflow/database.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'addemp_page.dart';
+import 'report_page.dart';
 
-class AddObraPage extends StatefulWidget {
+class Add_build extends StatefulWidget {
   @override
-  _AddObraPageState createState() => _AddObraPageState();
+  _Add_buildState createState() => _Add_buildState();
 }
 
-class _AddObraPageState extends State<AddObraPage> {
+class _Add_buildState extends State<Add_build> {
   final GlobalKey<FormState> _formKey_name = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey_start = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey_end = GlobalKey<FormState>();
@@ -31,7 +31,7 @@ class _AddObraPageState extends State<AddObraPage> {
 
   @override
   Widget build(BuildContext context) {
-  final String login = ModalRoute.of(context)!.settings.arguments as String;
+    final login = "rafael";
     return Scaffold(
       appBar: AppBar(
         title: Text('Adicionar Projeto'),
@@ -96,7 +96,8 @@ class _AddObraPageState extends State<AddObraPage> {
                             String formattedDate =
                                 DateFormat('dd/MM/yyyy').format(pickedDate);
                             setState(() {
-                              dateinput_start.text = start_insert = formattedDate;
+                              dateinput_start.text =
+                                  start_insert = formattedDate;
                             });
                           }
                         },
@@ -137,7 +138,7 @@ class _AddObraPageState extends State<AddObraPage> {
                             String formattedDate =
                                 DateFormat('dd/MM/yyyy').format(pickedDate);
                             setState(() {
-                              dateinput_end.text= end_insert = formattedDate;
+                              dateinput_end.text = end_insert = formattedDate;
                             });
                           }
                         },
@@ -210,7 +211,6 @@ class _AddObraPageState extends State<AddObraPage> {
               }
             }
           }
-
         },
         child: Icon(Icons.arrow_forward),
       ),

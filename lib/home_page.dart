@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final String login = ModalRoute.of(context)!.settings.arguments as String;
-  var obras = get_build(login);
+    var obras = get_build(login);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       // Ação quando o título da obra for clicado
                       Navigator.pushNamed(context, '/home/construction',
-                          arguments: snapshot.data?[index]);
+                          arguments: <String, dynamic>{"projeto": snapshot.data?[index], "login":login});
                     },
                     child: Text(snapshot.data?[index]?["Nome"]),
                   ),
