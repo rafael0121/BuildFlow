@@ -34,7 +34,6 @@ Future<bool> check_login(String? login, String? password) async {
       .get()
       .then((QuerySnapshot querySnapshot) {
     if (querySnapshot.size > 0) {
-      save_cred?.login = login;
       return true;
     } else {
       return false;

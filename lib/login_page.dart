@@ -154,7 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                               login_insert, password_insert)) {
                             _formKey_Login.currentState!.reset();
                             _formKey_Password.currentState!.reset();
-                            save_cred?.login = login_insert;
                             Navigator.pushNamed(context, "/home", arguments: login_insert);
                           } else {
                             final snackBar = SnackBar(

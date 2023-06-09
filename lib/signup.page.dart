@@ -29,13 +29,7 @@ class _SignupPageState extends State<SignupPage> {
               width: 200,
               height: 200,
               alignment: Alignment(0.0, 1.15),
-              decoration: BoxDecoration(
-                // ignore: unnecessary_new, prefer_const_constructors
-                image: new DecorationImage(
-                  image: AssetImage("images/fenda.png"),
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
+            
               child: Container(
                 height: 56,
                 width: 56,
@@ -56,15 +50,6 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   borderRadius: BorderRadius.all(
                     const Radius.circular(56),
-                  ),
-                ),
-                child: SizedBox.expand(
-                  child: ElevatedButton(
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {},
                   ),
                 ),
               ),

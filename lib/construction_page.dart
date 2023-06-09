@@ -18,7 +18,8 @@ class _Construction_pageState extends State<Construction_page> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<dynamic, dynamic> projeto = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
+    final Map<dynamic, dynamic> projeto =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
 
     return Scaffold(
       appBar: AppBar(
@@ -74,18 +75,29 @@ class _Construction_pageState extends State<Construction_page> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              IconButton(
+                icon: Icon(Icons.camera_alt),
+                onPressed: () {
+                  // Lógica para adicionar foto da câmera
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.photo_library),
+                onPressed: () {
+                  // Lógica para adicionar foto da galeria
+                },
+              ),
+            ]),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                 SizedBox(
-                    width: 300, // Defina a largura desejada
-                    height: 300, // Defina a altura desejada
-                    child:Image.network(projeto["Imagem"])
-                    ),
-                  ]
-              
-            ),
-            SizedBox(height: 16),
+                SizedBox(
+                    width: 250, // Defina a largura desejada
+                    height: 250, // Defina a altura desejada
+                    child: Image.network(projeto["Imagem"])),
+              ],
+            )
           ],
         ),
       ),

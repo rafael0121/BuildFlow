@@ -14,17 +14,12 @@ import 'construction_page.dart';
 import 'reset-password.page.dart';
 import 'database.dart';
 
-Save_cred? save_cred;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MyApp());
-}
-
-class Save_cred {
-  String? login;
 }
 
 class MyApp extends StatelessWidget {
