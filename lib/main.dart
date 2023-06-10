@@ -1,3 +1,4 @@
+import 'package:buildflow/addreport_page.dart';
 import 'package:buildflow/report_page.dart';
 import 'package:buildflow/signup.page.dart';
 
@@ -36,9 +37,10 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignupPage(),
         '/passwordreset': (context) => ResetPasswordPage(),
         '/home': (context) => HomePage(),
+        '/home/add_build': (context) => Add_build(),
         '/home/construction': (context) => Construction_page(),
         '/home/construction/report': (context) => Report_page(),
-        '/home/construction/report/add_build': (context) => Add_build(),
+        '/home/construction/report/add_report': (context) => Addreport_page(),
         '/home/settings': (context) => Settings_page(),
         '/home/settings/account': (context) => ManageAcc(),
         '/home/settings/security': (context) => Sec_page(),

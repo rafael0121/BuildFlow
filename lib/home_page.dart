@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, '/home/addobra', arguments: login);
+          Navigator.pushNamed(context, '/home/add_build', arguments: login);
           setState(() {});
         },
       ),

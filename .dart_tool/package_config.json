@@ -284,6 +284,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "select_form_field",
+      "rootUri": "file:///home/rafael/.pub-cache/hosted/pub.dev/select_form_field-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///opt/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -368,7 +374,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-06-07T16:24:10.959334Z",
+  "generated": "2023-06-09T20:21:38.491067Z",
   "generator": "pub",
   "generatorVersion": "3.0.3"
 }

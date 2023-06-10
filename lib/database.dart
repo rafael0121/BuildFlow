@@ -90,3 +90,20 @@ Future<List<Map?>?> get_build(String? login) async {
 
   return response;
 }
+
+Future<List<Map?>?> get_reports(String? login) async {
+  var response = await FirebaseFirestore.instance
+      .collection("relatorios")
+      .where("Projeto", isEqualTo: login)
+      .get()
+      .then((QuerySnapshot querySnapshot) {
+    List<Map<String, dynamic>>? reports= [];
+    for (var docSnapshot in querySnapshot.docs) {
+      var dados = docSnapshot.data() as Map<String, dynamic>;
+      reports!.add(dados);
+    }
+    return reports;
+  });
+
+  return response;
+}
