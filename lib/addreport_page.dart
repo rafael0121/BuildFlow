@@ -4,6 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:select_form_field/select_form_field.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class Addreport_page extends StatefulWidget {
   const Addreport_page({Key? key}) : super(key: key);
@@ -15,29 +20,78 @@ class _addreport_pageState extends State<Addreport_page> {
   var _icon0 = Icon(Icons.thunderstorm);
   var _icon1 = Icon(Icons.thunderstorm);
   var _icon2 = Icon(Icons.thunderstorm);
-  @override
-  Widget build(BuildContext) {
-    String currentTime() {
-      DateTime dataAtual = DateTime.now();
-      String formatData = DateFormat('dd/MM/yyyy').format(dataAtual);
-      return formatData;
-    }
+  Position? currentPosition;
+  String currentTime = "Carregando...";
+  List<String> imagePaths = [];
 
+  @override
+  void initState() {
+    super.initState();
+    getCurrentLocation();
+    getCurrentTime();
+  }
+
+  Future<void> _capturePhoto() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        imagePaths.add(pickedFile.path);
+      });
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        imagePaths.add(pickedFile.path);
+      });
+    }
+  }
+
+  Future<void> getCurrentLocation() async {
+    final permissionStatus = await Permission.location.request();
+    if (permissionStatus.isGranted) {
+      try {
+        Position position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
+        setState(() {
+          currentPosition = position;
+        });
+      } catch (e) {
+        print('Erro ao obter a localização: $e');
+      }
+    } else {
+      Navigator.pop(context);
+    }
+  }
+
+  void getCurrentTime() {
+    DateTime dataAtual = DateTime.now();
+    String time = DateFormat('dd/MM/yyyy HH:mm:ss').format(dataAtual);
+    setState(() {
+      currentTime = time;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final List<Map<String, dynamic>> _items = [
       {
         'value': 'clearValue',
         'label': 'Limpo',
-        'icon': Icon(Icons.sunny),
       },
       {
         'value': 'cloudyValue',
         'label': 'Nublado',
-        'icon': Icon(Icons.cloud),
       },
       {
         'value': 'rainValue',
         'label': 'Chuvoso',
-        'icon': Icon(Icons.thunderstorm),
       },
     ];
 
@@ -52,7 +106,7 @@ class _addreport_pageState extends State<Addreport_page> {
           children: [
             SizedBox(height: 24),
             Text(
-              'Projeto',
+              'Projeto:',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -65,9 +119,13 @@ class _addreport_pageState extends State<Addreport_page> {
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 16),
+            Divider(
+              height: 24,
+              color: Colors.black, // Cor da linha
+              thickness: 1, // Espessura da linha
+            ),
             Text(
-              'Data de Inspeção',
+              'Data de Inspeção:',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -75,21 +133,23 @@ class _addreport_pageState extends State<Addreport_page> {
             ),
             SizedBox(height: 8),
             Text(
-              currentTime(),
+              currentTime,
               style: TextStyle(
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 24),
+            TextButton.icon(
+                onPressed: () {
+                  getCurrentTime();
+                },
+                icon: Icon(Icons.schedule),
+                label: Text('Atualizar')),
             Divider(
-              color: Colors.deepOrange, // Cor da linha
-              height: 20, // Altura da linha
-              thickness: 10, // Espessura da linha
-            ),
-            SizedBox(
               height: 24,
+              color: Colors.black, // Cor da linha
+              thickness: 1, // Espessura da linha
             ),
-            Text("Situação Climática",
+            Text("Situação Climática:",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
@@ -169,8 +229,113 @@ class _addreport_pageState extends State<Addreport_page> {
               },
             ),
             SizedBox(
-              height: 12,
+              height: 24,
             ),
+            Text("Localização:",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: const Color.fromARGB(255, 2, 39, 70))),
+            SizedBox(
+              height: 16,
+            ),
+            Builder(
+              builder: (context) {
+                if (currentPosition == null) {
+                  return Text('Pegando localização...',
+                      style: TextStyle(fontSize: 16, color: Colors.red));
+                } else {
+                  return Text('Localização Encontrada : \n$currentPosition',
+                      style: TextStyle(fontSize: 16, color: Colors.green));
+                }
+              },
+            ),
+            TextButton.icon(
+                onPressed: () {
+                  setState(() {
+                    currentPosition = null;
+                  });
+                  getCurrentLocation();
+                },
+                icon: Icon(Icons.location_on),
+                label: Text('Atualizar')),
+            SizedBox(
+              height: 24,
+            ),
+            Text("Descrição geral:",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: const Color.fromARGB(255, 2, 39, 70))),
+            SizedBox(
+              height: 16,
+            ),
+            TextField(
+              maxLines: 10,
+              maxLength: 500,
+              decoration: InputDecoration(
+                hintText: 'Digite aqui...',
+              ),
+            ),
+            SizedBox(
+              height: 24,
+            ),
+            Text("Anexar fotos:",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: const Color.fromARGB(255, 2, 39, 70))),
+            SizedBox(
+              height: 18,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.camera_alt),
+                  onPressed: () {
+                    _capturePhoto();
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.photo_library),
+                  onPressed: () {
+                    _pickImage();
+                  },
+                ),
+              ],
+            ),
+            Scrollbar(
+                thumbVisibility: true,
+                thickness: 5,
+                radius: Radius.circular(10),
+                trackVisibility: true,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                      height: 200,
+                      enableInfiniteScroll: false,
+                    ),
+                    items: imagePaths.map((path) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Image.file(
+                            File(path),
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      );
+                    }).toList(),
+                  ),
+                )),
+            SizedBox(
+              height: 24,
+            ),
+            TextButton.icon(
+                onPressed: () {},
+                icon: Icon(Icons.send),
+                label: Text("Salvar Relatório"))
           ],
         ));
   }

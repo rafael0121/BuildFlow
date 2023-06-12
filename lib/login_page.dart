@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               width: 128,
               height: 128,
-              child: Image.asset('images/construction.png'),
+              child: Image.asset('images/build.png'),
             ),
             SizedBox(
               height: 20,
@@ -154,7 +154,8 @@ class _LoginPageState extends State<LoginPage> {
                               login_insert, password_insert)) {
                             _formKey_Login.currentState!.reset();
                             _formKey_Password.currentState!.reset();
-                            Navigator.pushNamed(context, "/home", arguments: login_insert);
+                            Navigator.pushNamed(context, "/home",
+                                arguments: login_insert);
                           } else {
                             final snackBar = SnackBar(
                                 content: Text(

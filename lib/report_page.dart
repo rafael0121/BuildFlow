@@ -26,7 +26,7 @@ class _Report_pageState extends State<Report_page> {
           IconButton(
               onPressed: () {
                 Navigator.popAndPushNamed(
-                    context, "/home/construction/report/add_report", arguments: project_name);
+                    context, "/home/build/report/add_report", arguments: project_name);
               },
               icon: Icon(Icons.add))
         ],

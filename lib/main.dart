@@ -12,7 +12,7 @@ import 'firebase_options.dart';
 import 'login_page.dart';
 import 'sec-and-acs.dart';
 import 'home_page.dart';
-import 'construction_page.dart';
+import 'build_page.dart';
 import 'reset-password.page.dart';
 import 'database.dart';
 
@@ -38,9 +38,9 @@ class MyApp extends StatelessWidget {
         '/passwordreset': (context) => ResetPasswordPage(),
         '/home': (context) => HomePage(),
         '/home/add_build': (context) => Add_build(),
-        '/home/construction': (context) => Construction_page(),
-        '/home/construction/report': (context) => Report_page(),
-        '/home/construction/report/add_report': (context) => Addreport_page(),
+        '/home/build': (context) => Build_page(),
+        '/home/build/report': (context) => Report_page(),
+        '/home/build/report/add_report': (context) => Addreport_page(),
         '/home/settings': (context) => Settings_page(),
         '/home/settings/account': (context) => ManageAcc(),
         '/home/settings/security': (context) => Sec_page(),

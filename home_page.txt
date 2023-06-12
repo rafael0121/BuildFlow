@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'addbuild_page.dart';
-import 'construction_page.dart';
+import 'build_page.dart';
 import 'editbuild_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Construction_page(),
+                    builder: (context) => Build_page(),
                   ),
                 );
               },
