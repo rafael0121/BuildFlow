@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),
-        '/passwordreset': (context) => ResetPasswordPage(),
         '/home': (context) => HomePage(),
         '/home/add_build': (context) => Add_build(),
         '/home/build': (context) => Build_page(),

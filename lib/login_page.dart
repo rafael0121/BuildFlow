@@ -3,7 +3,6 @@
 import 'package:buildflow/main.dart';
 import 'package:flutter/material.dart';
 import 'home_page.dart';
-import 'reset-password.page.dart';
 import 'signup.page.dart';
 import 'database.dart';
 
@@ -91,19 +90,6 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       )
                     ])),
-            Container(
-              height: 40,
-              alignment: Alignment.centerRight,
-              child: ElevatedButton(
-                child: Text(
-                  "Recuperar Senha",
-                  textAlign: TextAlign.right,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/passwordreset');
-                },
-              ),
-            ),
             SizedBox(
               height: 40,
             ),
