@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures
 
+import 'package:buildflow/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +24,10 @@ class _addreport_pageState extends State<Addreport_page> {
   Position? currentPosition;
   String currentTime = "Carregando...";
   List<String> imagePaths = [];
+  var morning = "rainValue";
+  var noon = "rainValue";
+  var night = "rainvalue";
+  final _controller = TextEditingController();
 
   @override
   void initState() {
@@ -96,6 +101,7 @@ class _addreport_pageState extends State<Addreport_page> {
     ];
 
     String project_name = ModalRoute.of(context)!.settings.arguments as String;
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -188,6 +194,7 @@ class _addreport_pageState extends State<Addreport_page> {
               icon: _icon1,
               items: _items,
               onChanged: (val) {
+                noon = val;
                 setState(() {
                   switch (val) {
                     case "clearValue":
@@ -213,6 +220,7 @@ class _addreport_pageState extends State<Addreport_page> {
               icon: _icon2,
               items: _items,
               onChanged: (val) {
+                night = val;
                 setState(() {
                   switch (val) {
                     case "clearValue":
@@ -271,6 +279,7 @@ class _addreport_pageState extends State<Addreport_page> {
               height: 16,
             ),
             TextField(
+              controller: _controller,
               maxLines: 10,
               maxLength: 500,
               decoration: InputDecoration(
@@ -333,7 +342,18 @@ class _addreport_pageState extends State<Addreport_page> {
               height: 24,
             ),
             TextButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Map<String, dynamic> report = {
+                    "Projeto": project_name,
+                    "Data": currentTime,
+                    "Clima": [morning, noon, night],
+                    "Localizacao": currentPosition.toString(),
+                    "Descricao": _controller.text,
+                  };
+                  add_report(report);
+
+                  Navigator.pop(context);
+                },
                 icon: Icon(Icons.send),
                 label: Text("Salvar Relatório"))
           ],

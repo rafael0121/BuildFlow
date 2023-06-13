@@ -11,11 +11,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  
+
   @override
   Widget build(BuildContext context) {
     final String login = ModalRoute.of(context)!.settings.arguments as String;
 
     var obras = get_build(login);
+
+    void initState() {
+      super.initState();
+      setState(() {});
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -63,18 +71,6 @@ class _HomePageState extends State<HomePage> {
                             });
                       },
                       child: Text(snapshot.data?[index]?["Nome"]),
-                    ),
-                    trailing: Wrap(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            setState(() {
-                              //obras.removeAt(index);
-                            });
-                          },
-                        ),
-                      ],
                     ),
                   );
                 },

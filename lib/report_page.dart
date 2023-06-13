@@ -9,6 +9,17 @@ class Report_page extends StatefulWidget {
 }
 
 class _Report_pageState extends State<Report_page> {
+  String text_description(String? description) {
+    if (description == null) {
+      return "";
+    }
+    if (description.length > 20) {
+      return description.substring(0, 16) + "...";
+    } else {
+      return description;
+    }
+  }
+
   @override
   Widget build(BuildContext) {
     final Map<String, dynamic> arguments =
@@ -16,7 +27,7 @@ class _Report_pageState extends State<Report_page> {
     final String login = arguments["login"];
     final Map<dynamic, dynamic> projeto = arguments["projeto"];
     final String project_name = projeto["Nome"];
-    var reports = get_reports(login);
+    var reports = get_report(projeto["Nome"]);
 
     return Scaffold(
       appBar: AppBar(
@@ -26,7 +37,8 @@ class _Report_pageState extends State<Report_page> {
           IconButton(
               onPressed: () {
                 Navigator.popAndPushNamed(
-                    context, "/home/build/report/add_report", arguments: project_name);
+                    context, "/home/build/report/add_report",
+                    arguments: project_name);
               },
               icon: Icon(Icons.add))
         ],
@@ -39,23 +51,29 @@ class _Report_pageState extends State<Report_page> {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  leading: SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: Text(
-                      snapshot.data?[index]?["Data"],
-                    ),
-                  ),
-                  title: InkWell(
-                    onTap: () {
-                      /*Navigator.pushNamed(context, '/home/construction',
+                return Container(
+                  padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                  child: Card(
+                    child: ListTile(
+                      tileColor: Colors.orange[100],
+                      leading: Text(
+                        snapshot.data?[index]?["Data"],
+                      ),
+                      title: 
+                          
+                          Text(
+                            text_description(
+                                snapshot.data?[index]?["Descricao"]),
+                          ),
+                      onTap: () {
+                            Navigator.pushNamed(context, '/home/build/report/only_report',
                           arguments: <String, dynamic>{
-                            "projeto": snapshot.data?[index],
+                            "relatorio": snapshot.data?[index],
                             "login": login
-                          });*/
-                    },
-                    child: Text(snapshot.data?[index]?["Resumo"]),
+                          });
+                          },
+                        
+                    ),
                   ),
                 );
               },

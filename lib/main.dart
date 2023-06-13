@@ -1,3 +1,4 @@
+import 'package:buildflow/%20%CC%A3only_report_page.dart';
 import 'package:buildflow/addreport_page.dart';
 import 'package:buildflow/report_page.dart';
 import 'package:buildflow/signup.page.dart';
@@ -13,7 +14,6 @@ import 'login_page.dart';
 import 'sec-and-acs.dart';
 import 'home_page.dart';
 import 'build_page.dart';
-import 'reset-password.page.dart';
 import 'database.dart';
 
 void main() async {
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/home/add_build': (context) => Add_build(),
         '/home/build': (context) => Build_page(),
         '/home/build/report': (context) => Report_page(),
+        '/home/build/report/only_report': (context) => Only_report_page(),
         '/home/build/report/add_report': (context) => Addreport_page(),
         '/home/settings': (context) => Settings_page(),
         '/home/settings/account': (context) => ManageAcc(),

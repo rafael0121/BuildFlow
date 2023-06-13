@@ -65,13 +65,24 @@ Future<bool> add_build(String? name, String? start_date, String? end_date,
         'Data_termino': end_date,
         'Descricao': description,
         'Inspetor': login,
-        'Imagem' : "",  
+        'Imagem': "",
       });
     }
     return true;
   });
 
   return response;
+}
+
+Future<bool> add_report(Map<String, dynamic> report) async {
+  try {
+    await FirebaseFirestore.instance.collection("relatorios").add(report);
+  } catch (e) {
+    print(e);
+    return false;
+  }
+
+  return true;
 }
 
 Future<List<Map?>?> get_build(String? login) async {
@@ -83,6 +94,7 @@ Future<List<Map?>?> get_build(String? login) async {
     List<Map<String, dynamic>>? obras = [];
     for (var docSnapshot in querySnapshot.docs) {
       var dados = docSnapshot.data() as Map<String, dynamic>;
+      dados["Id"] = docSnapshot.id;
       obras!.add(dados);
     }
     return obras;
@@ -91,19 +103,24 @@ Future<List<Map?>?> get_build(String? login) async {
   return response;
 }
 
-Future<List<Map?>?> get_reports(String? login) async {
+Future<List<Map?>?> get_report(String? name_project) async {
   var response = await FirebaseFirestore.instance
       .collection("relatorios")
-      .where("Projeto", isEqualTo: login)
+      .where("Projeto", isEqualTo: name_project)
       .get()
       .then((QuerySnapshot querySnapshot) {
-    List<Map<String, dynamic>>? reports= [];
+    List<Map<String, dynamic>>? reports = [];
     for (var docSnapshot in querySnapshot.docs) {
       var dados = docSnapshot.data() as Map<String, dynamic>;
+      dados["Id"] = docSnapshot.id;
       reports!.add(dados);
     }
     return reports;
   });
 
   return response;
+}
+
+void delete_build(var id) async {
+  await FirebaseFirestore.instance.collection("projetos").doc(id).delete();
 }

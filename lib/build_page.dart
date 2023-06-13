@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:buildflow/database.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -16,12 +16,12 @@ class Build_page extends StatefulWidget {
 class _Build_pageState extends State<Build_page> {
   //Cria uma lista para o caminho das imagens
   List<String> imagePaths = [];
+
   @override
   Widget build(BuildContext context) {
     //Recebe os dados da obra selecionada vindo da página anterior
     final Map<String, dynamic> arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final String login = arguments["login"];
     final Map<dynamic, dynamic> projeto = arguments["projeto"];
 
     Future<void> _capturePhoto() async {
@@ -49,6 +49,15 @@ class _Build_pageState extends State<Build_page> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Informação da obra'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              delete_build(projeto["Id"]);
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
           padding: EdgeInsets.all(16.0),
