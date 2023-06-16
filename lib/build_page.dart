@@ -53,8 +53,35 @@ class _Build_pageState extends State<Build_page> {
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {
-              delete_build(projeto["Id"]);
-              Navigator.pop(context);
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Excluir Projeto'),
+                    content:
+                        Text('Tem certeza de que deseja excluir este projeto?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          delete_build(projeto);
+                          Navigator.popUntil(
+                              context,
+                              ModalRoute.withName(
+                                  "/home")); 
+                        },
+                        child: Text('Sim'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context,
+                              false); 
+                        },
+                        child: Text('Não'),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
         ],

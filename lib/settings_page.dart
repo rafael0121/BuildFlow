@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart';
-import 'sec-and-acs.dart';
-import 'info.dart';
 
 class Settings_page extends StatefulWidget {
   @override

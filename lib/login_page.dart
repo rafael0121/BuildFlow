@@ -1,9 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:buildflow/main.dart';
 import 'package:flutter/material.dart';
-import 'home_page.dart';
-import 'signup.page.dart';
 import 'database.dart';
 
 class LoginPage extends StatefulWidget {
@@ -26,6 +23,11 @@ class _LoginPageState extends State<LoginPage> {
         color: Colors.white,
         child: ListView(
           children: <Widget>[
+            Center(
+                child: Text(
+              "BuildFlow",
+              style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold, color: Colors.orange),
+            )),
             SizedBox(
               width: 128,
               height: 128,

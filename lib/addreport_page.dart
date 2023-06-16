@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures
 
 import 'package:buildflow/database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:select_form_field/select_form_field.dart';
@@ -239,6 +238,11 @@ class _addreport_pageState extends State<Addreport_page> {
             SizedBox(
               height: 24,
             ),
+            Divider(
+              height: 24,
+              color: Colors.black, // Cor da linha
+              thickness: 1, // Espessura da linha
+            ),
             Text("Localização:",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -267,8 +271,10 @@ class _addreport_pageState extends State<Addreport_page> {
                 },
                 icon: Icon(Icons.location_on),
                 label: Text('Atualizar')),
-            SizedBox(
+            Divider(
               height: 24,
+              color: Colors.black, // Cor da linha
+              thickness: 1, // Espessura da linha
             ),
             Text("Descrição geral:",
                 style: TextStyle(
@@ -350,7 +356,7 @@ class _addreport_pageState extends State<Addreport_page> {
                     "Localizacao": currentPosition.toString(),
                     "Descricao": _controller.text,
                   };
-                  add_report(report);
+                  add_report(report, imagePaths);
 
                   Navigator.pop(context);
                 },

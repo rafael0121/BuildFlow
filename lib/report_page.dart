@@ -1,5 +1,4 @@
 import 'package:buildflow/database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Report_page extends StatefulWidget {
@@ -59,20 +58,17 @@ class _Report_pageState extends State<Report_page> {
                       leading: Text(
                         snapshot.data?[index]?["Data"],
                       ),
-                      title: 
-                          
-                          Text(
-                            text_description(
-                                snapshot.data?[index]?["Descricao"]),
-                          ),
+                      title: Text(
+                        text_description(snapshot.data?[index]?["Descricao"]),
+                      ),
                       onTap: () {
-                            Navigator.pushNamed(context, '/home/build/report/only_report',
-                          arguments: <String, dynamic>{
-                            "relatorio": snapshot.data?[index],
-                            "login": login
-                          });
-                          },
-                        
+                        Navigator.pushNamed(
+                            context, '/home/build/report/only_report',
+                            arguments: <String, dynamic>{
+                              "relatorio": snapshot.data?[index],
+                              "login": login
+                            });
+                      },
                     ),
                   ),
                 );

@@ -1,15 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:buildflow/database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:select_form_field/select_form_field.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'database.dart';
 
 class Only_report_page extends StatefulWidget {
   const Only_report_page({Key? key}) : super(key: key);
@@ -20,7 +14,19 @@ class Only_report_page extends StatefulWidget {
 
 class _only_report_pageState extends State<Only_report_page> {
   //Cria uma lista para o caminho das imagens
-  List<String> imagePaths = [];
+  //List<String> imagePaths = [];
+
+  String translate_text(String val) {
+    switch (val) {
+      case "rainValue":
+        return "Chuvoso";
+      case "clearValue":
+        return "Limpo";
+      case "cloudValue":
+        return "Nublado";
+    }
+    return "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +34,8 @@ class _only_report_pageState extends State<Only_report_page> {
     final Map<String, dynamic> arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final Map<dynamic, dynamic> relatorio = arguments["relatorio"];
+
+    var imagesByte = get_image(relatorio["Id"]);
 
     String text_description(String? description) {
       if (description == null) {
@@ -40,6 +48,39 @@ class _only_report_pageState extends State<Only_report_page> {
         appBar: AppBar(
           centerTitle: true,
           title: Text("Relatório"),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Excluir Projeto'),
+                      content: Text(
+                          'Tem certeza de que deseja excluir este projeto?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            delete_report(relatorio["Id"]);
+                            Navigator.popUntil(context,
+                                ModalRoute.withName("/home/build/report"));
+                          },
+                          child: Text('Sim'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                          child: Text('Não'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ],
         ),
         body: ListView(
           padding: EdgeInsets.only(left: 40, right: 40),
@@ -73,7 +114,7 @@ class _only_report_pageState extends State<Only_report_page> {
               height: 16,
             ),
             Text(
-              "Manhã " + relatorio['Clima'][0],
+              "Manhã: " + translate_text(relatorio['Clima'][0]),
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -82,7 +123,7 @@ class _only_report_pageState extends State<Only_report_page> {
               height: 16,
             ),
             Text(
-              "Tarde " + relatorio['Clima'][1],
+              "Tarde: " + translate_text(relatorio['Clima'][1]),
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -91,7 +132,7 @@ class _only_report_pageState extends State<Only_report_page> {
               height: 16,
             ),
             Text(
-              "Noite " + relatorio['Clima'][2],
+              "Noite: " + translate_text(relatorio['Clima'][2]),
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -144,30 +185,38 @@ class _only_report_pageState extends State<Only_report_page> {
             SizedBox(
               height: 18,
             ),
-            Scrollbar(
-                thumbVisibility: true,
-                thickness: 5,
-                radius: Radius.circular(10),
-                trackVisibility: true,
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: CarouselSlider(
-                    options: CarouselOptions(
-                      height: 200,
-                      enableInfiniteScroll: false,
-                    ),
-                    items: imagePaths.map((path) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Image.file(
-                            File(path),
-                            fit: BoxFit.cover,
-                          );
-                        },
-                      );
-                    }).toList(),
-                  ),
-                )),
+            FutureBuilder(
+                future: imagesByte,
+                builder: (BuildContext context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Scrollbar(
+                        thumbVisibility: true,
+                        thickness: 5,
+                        radius: Radius.circular(10),
+                        trackVisibility: true,
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              height: 200,
+                              enableInfiniteScroll: false,
+                            ),
+                            items: snapshot.data!.map((image) {
+                              return Builder(
+                                builder: (BuildContext context) {
+                                  return Image.memory(
+                                    image!,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              );
+                            }).toList(),
+                          ),
+                        ));
+                  } else {
+                    return Text("Error");
+                  }
+                }),
             SizedBox(
               height: 24,
             ),

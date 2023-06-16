@@ -14,7 +14,6 @@ import 'login_page.dart';
 import 'sec-and-acs.dart';
 import 'home_page.dart';
 import 'build_page.dart';
-import 'database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
