@@ -2,9 +2,6 @@
 
 import 'package:buildflow/database.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class Build_page extends StatefulWidget {
   const Build_page({Key? key}) : super(key: key);
@@ -23,28 +20,6 @@ class _Build_pageState extends State<Build_page> {
     final Map<String, dynamic> arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final Map<dynamic, dynamic> projeto = arguments["projeto"];
-
-    Future<void> _capturePhoto() async {
-      final picker = ImagePicker();
-      final pickedFile = await picker.getImage(source: ImageSource.camera);
-
-      if (pickedFile != null) {
-        setState(() {
-          imagePaths.add(pickedFile.path);
-        });
-      }
-    }
-
-    Future<void> _pickImage() async {
-      final picker = ImagePicker();
-      final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-      if (pickedFile != null) {
-        setState(() {
-          imagePaths.add(pickedFile.path);
-        });
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -141,55 +116,7 @@ class _Build_pageState extends State<Build_page> {
                   icon: Icon(Icons.description),
                 ),
               ),
-              SizedBox(height: 16),
-              Text(
-                'Fotos:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.camera_alt),
-                    onPressed: () {
-                      _capturePhoto();
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.photo_library),
-                    onPressed: () {
-                      _pickImage();
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              Scrollbar(
-                  thumbVisibility: true,
-                  thickness: 5,
-                  radius: Radius.circular(10),
-                  trackVisibility: true,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: CarouselSlider(
-                      options: CarouselOptions(
-                        height: 200,
-                        enableInfiniteScroll: false,
-                      ),
-                      items: imagePaths.map((path) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Image.file(
-                              File(path),
-                              fit: BoxFit.cover,
-                            );
-                          },
-                        );
-                      }).toList(),
-                    ),
-                  )),
-              SizedBox(height: 16),
+              
             ],
           )),
     );

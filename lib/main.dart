@@ -1,4 +1,4 @@
-import 'package:buildflow/%20%CC%A3only_report_page.dart';
+import 'package:buildflow/only_report_page.dart';
 import 'package:buildflow/addreport_page.dart';
 import 'package:buildflow/report_page.dart';
 import 'package:buildflow/signup.page.dart';

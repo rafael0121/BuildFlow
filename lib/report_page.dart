@@ -20,6 +20,11 @@ class _Report_pageState extends State<Report_page> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    setState(() {});
+  }
+
   Widget build(BuildContext) {
     final Map<String, dynamic> arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
@@ -105,6 +110,13 @@ class _Report_pageState extends State<Report_page> {
               children: children,
             ),
           );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: "Recarregar",
+        child: Icon(Icons.restart_alt),
+        onPressed: () {
+          setState(() {});
         },
       ),
     );

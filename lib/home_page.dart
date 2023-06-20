@@ -9,9 +9,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  
-
   @override
   Widget build(BuildContext context) {
     final String login = ModalRoute.of(context)!.settings.arguments as String;
@@ -49,26 +46,20 @@ class _HomePageState extends State<HomePage> {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: SizedBox(
-                      width: 80, // Defina a largura desejada
-                      height: 80, // Defina a altura desejada
-                      child: Image.network(
-                        snapshot.data?[index]?["Imagem"],
-                        fit: BoxFit
-                            .cover, // Ajusta a imagem para preencher o espaço definido
+                  return Container(
+                    padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                    child: Card(
+                      child: ListTile(
+                        tileColor: Colors.orange[500],
+                        title: Text(snapshot.data?[index]?["Nome"]),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/home/build',
+                              arguments: <String, dynamic>{
+                                "projeto": snapshot.data?[index],
+                                "login": login
+                              });
+                        },
                       ),
-                    ),
-                    title: InkWell(
-                      onTap: () {
-                        // Ação quando o título da obra for clicado
-                        Navigator.pushNamed(context, '/home/build',
-                            arguments: <String, dynamic>{
-                              "projeto": snapshot.data?[index],
-                              "login": login
-                            });
-                      },
-                      child: Text(snapshot.data?[index]?["Nome"]),
                     ),
                   );
                 },

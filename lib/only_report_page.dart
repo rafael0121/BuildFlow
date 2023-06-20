@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'database.dart';
 
@@ -24,6 +23,8 @@ class _only_report_pageState extends State<Only_report_page> {
         return "Limpo";
       case "cloudValue":
         return "Nublado";
+      case "notInfo":
+        return "Sem informação";
     }
     return "";
   }
@@ -214,7 +215,7 @@ class _only_report_pageState extends State<Only_report_page> {
                           ),
                         ));
                   } else {
-                    return Text("Error");
+                    return Text("Carregando...");
                   }
                 }),
             SizedBox(

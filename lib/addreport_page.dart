@@ -26,6 +26,7 @@ class _addreport_pageState extends State<Addreport_page> {
   var morning = "rainValue";
   var noon = "rainValue";
   var night = "rainvalue";
+  var notInfo = "notInfo";
   final _controller = TextEditingController();
 
   @override
@@ -97,6 +98,10 @@ class _addreport_pageState extends State<Addreport_page> {
         'value': 'rainValue',
         'label': 'Chuvoso',
       },
+      {
+        'value': 'notInfo',
+        'label': 'Sem informação',
+      }
     ];
 
     String project_name = ModalRoute.of(context)!.settings.arguments as String;
@@ -180,6 +185,8 @@ class _addreport_pageState extends State<Addreport_page> {
                       case "cloudyValue":
                         _icon0 = Icon(Icons.cloud);
                         break;
+                      case "notInfo":
+                        _icon0 = Icon(Icons.warning);
                     }
                   });
                 }),
@@ -205,6 +212,8 @@ class _addreport_pageState extends State<Addreport_page> {
                     case "cloudyValue":
                       _icon1 = Icon(Icons.cloud);
                       break;
+                    case "notInfo":
+                      _icon1 = Icon(Icons.warning);
                   }
                 });
               },
@@ -231,6 +240,8 @@ class _addreport_pageState extends State<Addreport_page> {
                     case "cloudyValue":
                       _icon2 = Icon(Icons.cloud);
                       break;
+                    case "notInfo":
+                      _icon2 = Icon(Icons.warning);
                   }
                 });
               },
@@ -287,7 +298,7 @@ class _addreport_pageState extends State<Addreport_page> {
             TextField(
               controller: _controller,
               maxLines: 10,
-              maxLength: 500,
+              maxLength: 1000,
               decoration: InputDecoration(
                 hintText: 'Digite aqui...',
               ),
